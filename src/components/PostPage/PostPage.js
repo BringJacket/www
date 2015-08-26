@@ -3,16 +3,13 @@
 import React, { PropTypes } from 'react';
 import styles from './PostPage.css';
 import withStyles from '../../decorators/withStyles';
-import env from '../../core/env';
-import http from '../../core/http';
+import Link from '../../utils/Link';
 
 @withStyles(styles)
 class PostPage {
 
   static propTypes = {
-    path: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    title: PropTypes.string
+    post: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -20,15 +17,13 @@ class PostPage {
   };
 
   render() {
-    console.log(env.urlFor.content('posts', this.props.postId))
-    this.context.onSetTitle(this.props.title);
+    this.context.onSetTitle(this.props.post.title);
     return (
       <div className="PostPage">
         <div className="PostPage-container">
-          {
-            this.props.path === '/' ? null : <h1>{this.props.title}</h1>
-          }
-          <div dangerouslySetInnerHTML={{__html: this.props.content || ''}} />
+          <h1>{this.props.post.title}</h1>
+          <div dangerouslySetInnerHTML={{__html: this.props.post.body}} />
+          <a href="2" onClick={Link.handleClick}>post 2</a>
         </div>
       </div>
     );
