@@ -3,8 +3,8 @@
 import 'babel/polyfill';
 import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
-import dispatcher from './core/dispatcher';
-import router from './router';
+import Dispatcher from './core/Dispatcher';
+import Router from './Router';
 import Location from './core/Location';
 import ActionTypes from './constants/ActionTypes';
 
@@ -28,19 +28,19 @@ const context = {
 
 function run() {
   const state = { path: window.location.pathname, context };
-  router.dispatch(state, (_, component) => render(component));
+  Router.dispatch(state, (_, component) => render(component));
 
-  dispatcher.register(action => {
+  Dispatcher.register(action => {
     if (action.type === ActionTypes.CHANGE_LOCATION) {
       console.log('dispatch')
       const state = { path: action.path, context };
-      router.dispatch(state, (_, component) => render(component));
+      Router.dispatch(state, (_, component) => render(component));
     }
   });
 
   Location.listen(async(location) => {
     const state = { path: location.pathname, query: location.query, context };
-    await router.dispatch(state, (_, component) => render(component));
+    await Router.dispatch(state, (_, component) => render(component));
   });
 }
 

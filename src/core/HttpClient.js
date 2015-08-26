@@ -3,7 +3,7 @@
 import request from 'superagent';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
-const http = {
+const HttpClient = {
 
   get: url => new Promise((resolve, reject) => {
     request
@@ -21,4 +21,4 @@ const http = {
 
 };
 
-export default http;
+export default HttpClient;

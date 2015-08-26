@@ -8,11 +8,11 @@ function canBeFoundAt(domain) {
   });
 }
 
-const env = {
+const Env = {
   urlFor: {
     content: canBeFoundAt(process.env.CONTENT_SERVER_URL),
     auth: canBeFoundAt(process.env.AUTH_SERVER_URL)
   }
 }
 
-export default env;
+export default Env;
