@@ -9,9 +9,7 @@ import Link from '../../utils/Link';
 class PostPage {
 
   static propTypes = {
-    path: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    title: PropTypes.string
+    post: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -19,7 +17,7 @@ class PostPage {
   };
 
   render() {
-    this.context.onSetTitle(this.props.title);
+    this.context.onSetTitle(this.props.post.title);
     return (
       <div className="PostPage">
         <div className="PostPage-container">
