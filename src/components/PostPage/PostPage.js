@@ -18,12 +18,13 @@ class PostPage {
 
   render() {
     this.context.onSetTitle(this.props.post.title);
+    const nextPost = this.props.post.id % 2 + 1;
     return (
       <div className="PostPage">
         <div className="PostPage-container">
           <h1>{this.props.post.title}</h1>
           <div dangerouslySetInnerHTML={{__html: this.props.post.body}} />
-          <a href="2" onClick={Link.handleClick}>post 2</a>
+          <a href={nextPost} onClick={Link.handleClick}>post {nextPost}</a>
         </div>
       </div>
     );
