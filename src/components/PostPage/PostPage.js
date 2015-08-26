@@ -4,6 +4,7 @@ import React, { PropTypes } from 'react';
 import styles from './PostPage.css';
 import withStyles from '../../decorators/withStyles';
 import Link from '../../utils/Link';
+import marked from 'marked';
 
 @withStyles(styles)
 class PostPage {
@@ -23,7 +24,7 @@ class PostPage {
       <div className="PostPage">
         <div className="PostPage-container">
           <h1>{this.props.post.title}</h1>
-          <div dangerouslySetInnerHTML={{__html: this.props.post.body}} />
+          <div dangerouslySetInnerHTML={{__html: marked(this.props.post.body)}} />
           <a href={nextPost} onClick={Link.handleClick}>post {nextPost}</a>
         </div>
       </div>
