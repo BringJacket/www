@@ -3,7 +3,7 @@
 import React, { PropTypes } from 'react';
 import styles from './PostPage.css';
 import withStyles from '../../decorators/withStyles';
-import Link from '../../utils/Link';
+import Link from '../Link';
 import marked from 'marked';
 
 @withStyles(styles)
