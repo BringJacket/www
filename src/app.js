@@ -27,23 +27,21 @@ const context = {
 };
 
 function run() {
-  router.dispatch({ path: window.location.pathname, context }, (_, component) => {
-    render(component);
-  });
+  const state = { path: window.location.pathname, context };
+  router.dispatch(state, (_, component) => render(component));
 
   dispatcher.register(action => {
     if (action.type === ActionTypes.CHANGE_LOCATION) {
-      router.dispatch({ path: action.path, context }, (_, component) => {
-        render(component);
-      });
+      console.log('dispatch')
+      const state = { path: action.path, context };
+      router.dispatch(state, (_, component) => render(component));
     }
   });
 
   Location.listen(async(location) => {
+    console.log('Loc')
     const state = { path: location.pathname, query: location.query, context };
-    await router.dispatch(state, (_, component) => {
-      render(component);
-    });
+    await router.dispatch(state, (_, component) => render(component));
   });
 }
 
@@ -51,7 +49,7 @@ function render (component) {
   const container = document.getElementById('app');
   ReactDOM.render(component, container, () => {
     let css = document.getElementById('css');
-    css.parentNode.removeChild(css);
+    if (!!css) css.parentNode.removeChild(css);
   });
 }
 
