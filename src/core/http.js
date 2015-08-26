@@ -8,6 +8,7 @@ const http = {
   get: url => new Promise((resolve, reject) => {
     request
       .get(url)
+      .timeout(1000)
       .accept('application/json')
       .end((err, res) => {
         if (err) {

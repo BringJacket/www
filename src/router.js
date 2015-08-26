@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import Router from 'react-routing/src/Router';
 import http from './core/http';
 import env from './core/env';
-import Location from './core/Location';
 import App from './components/App';
 import HomePage from './components/HomePage';
 import PostPage from './components/PostPage';
@@ -33,18 +32,15 @@ const router = new Router(on => {
 
   on('/register', async () => <RegisterPage />);
 
-  on('error', (state, error) => state.statusCode === 404 ?
-    <App context={state.context} error={error}><NotFoundPage /></App> :
-    <App context={state.context} error={error}><ErrorPage /></App>);
-
-});
-
-Location.listen(async(location) => {
-  const state = { path: location.pathname, query: location.query };
-  await router.dispatch(state, (_, component) => {
-    console.log(state, component);
-    ReactDOM.render(component, document.body);
+  on('error', (state, error) => {
+    switch(state.statusCode) {
+      case 404:
+        return <App context={state.context} error={error}><NotFoundPage /></App>;
+      default:
+        return <App context={state.context} error={error}><ErrorPage /></App>;
+    }
   });
+
 });
 
 export default router;

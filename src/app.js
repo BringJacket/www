@@ -8,7 +8,6 @@ import router from './router';
 import Location from './core/Location';
 import ActionTypes from './constants/ActionTypes';
 
-const container = document.getElementById('app');
 const context = {
   onSetTitle: value => document.title = value,
   onSetMeta: (name, content) => {
@@ -28,19 +27,31 @@ const context = {
 };
 
 function run() {
-  router.dispatch({ path: window.location.pathname, context }, (state, component) => {
-    ReactDOM.render(component, container, () => {
-      let css = document.getElementById('css');
-      css.parentNode.removeChild(css);
-    });
+  router.dispatch({ path: window.location.pathname, context }, (_, component) => {
+    render(component);
   });
 
   dispatcher.register(action => {
     if (action.type === ActionTypes.CHANGE_LOCATION) {
-      router.dispatch({ path: action.path, context }, (state, component) => {
-        ReactDOM.render(component, container);
+      router.dispatch({ path: action.path, context }, (_, component) => {
+        render(component);
       });
     }
+  });
+
+  Location.listen(async(location) => {
+    const state = { path: location.pathname, query: location.query, context };
+    await router.dispatch(state, (_, component) => {
+      render(component);
+    });
+  });
+}
+
+function render (component) {
+  const container = document.getElementById('app');
+  ReactDOM.render(component, container, () => {
+    let css = document.getElementById('css');
+    css.parentNode.removeChild(css);
   });
 }
 
