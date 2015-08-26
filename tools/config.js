@@ -61,7 +61,7 @@ const config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.EnvironmentPlugin([
       "NODE_ENV",
-      "CONTENT_SERVER_URL", "AUTH_SERVER_URL"
+      "CONTENT_SERVER_URL", "AUTH_SERVER_URL", "BASE_DOMAIN"
     ])
   ],
 

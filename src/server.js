@@ -22,6 +22,7 @@ const templateFile = path.join(__dirname, 'templates/index.html');
 const template = _.template(fs.readFileSync(templateFile, 'utf8'));
 
 server.get('*', async (req, res, next) => {
+  const host = req.get('x-forwarded-host') || req.get('host');
   try {
     let statusCode = 200;
     const data = { title: '', description: '', css: '', body: '' };
@@ -33,7 +34,13 @@ server.get('*', async (req, res, next) => {
       onPageNotFound: () => statusCode = 404
     };
 
-    await router.dispatch({ path: req.path, context }, (state, component) => {
+    const state = {
+      path: req.path,
+      redirect: res.redirect,
+      host,
+      context
+    };
+    await router.dispatch(state, (_, component) => {
       data.body = ReactDOM.renderToString(component);
       data.css = css.join('');
     });

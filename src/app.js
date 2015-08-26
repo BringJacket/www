@@ -39,7 +39,6 @@ function run() {
   });
 
   Location.listen(async(location) => {
-    console.log('Loc')
     const state = { path: location.pathname, query: location.query, context };
     await router.dispatch(state, (_, component) => render(component));
   });
