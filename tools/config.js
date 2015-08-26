@@ -58,7 +58,13 @@ const config = {
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': Object.keys(process.env).reduce(function(o, k) {
+        if (k === k.toUpperCase()) o[k] = JSON.stringify(process.env[k]);
+        return o;
+      }, {})
+    })
   ],
 
   resolve: {
