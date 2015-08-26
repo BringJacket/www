@@ -1,22 +1,22 @@
 /*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
 
 import React, { PropTypes } from 'react';
-import styles from './ContactPage.css';
+import styles from './HomePage.css';
 import withStyles from '../../decorators/withStyles';
 
 @withStyles(styles)
-class ContactPage {
+class HomePage {
 
   static contextTypes = {
     onSetTitle: PropTypes.func.isRequired
   };
 
   render() {
-    let title = 'Contact Us';
+    let title = 'Bring Jacket';
     this.context.onSetTitle(title);
     return (
-      <div className="ContactPage">
-        <div className="ContactPage-container">
+      <div className="HomePage">
+        <div className="HomePage-container">
           <h1>{title}</h1>
           <p>...</p>
         </div>
@@ -26,4 +26,4 @@ class ContactPage {
 
 }
 
-export default ContactPage;
+export default HomePage;

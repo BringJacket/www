@@ -1,11 +1,13 @@
 /*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
 
 import React, { PropTypes } from 'react';
-import styles from './ContentPage.css';
+import styles from './PostPage.css';
 import withStyles from '../../decorators/withStyles';
+import env from '../../core/env';
+import http from '../../core/http';
 
 @withStyles(styles)
-class ContentPage {
+class PostPage {
 
   static propTypes = {
     path: PropTypes.string.isRequired,
@@ -18,10 +20,11 @@ class ContentPage {
   };
 
   render() {
+    console.log(env.urlFor.content('posts', this.props.postId))
     this.context.onSetTitle(this.props.title);
     return (
-      <div className="ContentPage">
-        <div className="ContentPage-container">
+      <div className="PostPage">
+        <div className="PostPage-container">
           {
             this.props.path === '/' ? null : <h1>{this.props.title}</h1>
           }
@@ -33,4 +36,4 @@ class ContentPage {
 
 }
 
-export default ContentPage;
+export default PostPage;

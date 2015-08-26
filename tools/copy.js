@@ -22,9 +22,6 @@ export default async () => {
     // Static files
     copy('src/public', 'build/public'),
 
-    // Files with content (e.g. *.md files)
-    copy('src/content', 'build/content'),
-
     // Website and email templates
     copy('src/templates', 'build/templates'),
 

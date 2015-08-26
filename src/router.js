@@ -4,8 +4,8 @@ import React from 'react';
 import Router from 'react-routing/src/Router';
 import http from './core/http';
 import App from './components/App';
-import ContentPage from './components/ContentPage';
-import ContactPage from './components/ContactPage';
+import HomePage from './components/HomePage';
+import PostPage from './components/PostPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import NotFoundPage from './components/NotFoundPage';
@@ -18,16 +18,13 @@ const router = new Router(on => {
     return component && <App context={state.context}>{component}</App>;
   });
 
-  on('/contact', async () => <ContactPage />);
+  on('/', async () => <HomePage />);
+
+  on('/posts/:postId', async (state) => <PostPage postId={state.params.postId} />);
 
   on('/login', async () => <LoginPage />);
 
   on('/register', async () => <RegisterPage />);
-
-  on('*', async (state) => {
-    const content = await http.get(`/api/content?path=${state.path}`);
-    return content && <ContentPage {...content} />;
-  });
 
   on('error', (state, error) => state.statusCode === 404 ?
     <App context={state.context} error={error}><NotFoundPage /></App> :
