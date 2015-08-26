@@ -39,13 +39,12 @@ const router = new Router(on => {
 
 });
 
-Location.listen(async(loc) => {
-  const component = await router.dispatch(loc.pathname);
-  if (component === undefined) {
-    console.error("Router returned undefined for", loc.pathname)
-  } else {
+Location.listen(async(location) => {
+  const state = { path: location.pathname, query: location.query };
+  await router.dispatch(state, (_, component) => {
+    console.log(state, component);
     ReactDOM.render(component, document.body);
-  }
+  });
 });
 
 export default router;
