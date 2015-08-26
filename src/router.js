@@ -1,8 +1,11 @@
 /*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Router from 'react-routing/src/Router';
 import http from './core/http';
+import env from './core/env';
+import Location from './core/Location';
 import App from './components/App';
 import HomePage from './components/HomePage';
 import PostPage from './components/PostPage';
@@ -20,7 +23,11 @@ const router = new Router(on => {
 
   on('/', async () => <HomePage />);
 
-  on('/posts/:postId', async (state) => <PostPage postId={state.params.postId} />);
+  on('/posts/:postId', async (state) => {
+    const url = env.urlFor.content('posts', state.params.postId);
+    const post = await http.get(url);
+    return post && <PostPage post={post} />;
+  });
 
   on('/login', async () => <LoginPage />);
 
@@ -30,6 +37,11 @@ const router = new Router(on => {
     <App context={state.context} error={error}><NotFoundPage /></App> :
     <App context={state.context} error={error}><ErrorPage /></App>);
 
+});
+
+Location.listen(async(loc) => {
+  const component = await router.dispatch(loc.pathname);
+  ReactDOM.render(component, document.body);
 });
 
 export default router;

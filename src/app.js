@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
 import dispatcher from './core/dispatcher';
 import router from './router';
-import location from './core/location';
+import Location from './core/Location';
 import ActionTypes from './constants/ActionTypes';
 
 const container = document.getElementById('app');
@@ -45,7 +45,7 @@ function run() {
 }
 
 function handlePopState(event) {
-  location.navigateTo(window.location.pathname, { replace: !!event.state });
+  Location.pushState({ replace: !!event.state }, window.location.pathname);
 }
 
 // Run the application when both DOM is ready
