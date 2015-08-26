@@ -5,10 +5,9 @@ import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
 import dispatcher from './core/dispatcher';
 import router from './router';
-import location from './core/location';
+import Location from './core/Location';
 import ActionTypes from './constants/ActionTypes';
 
-const container = document.getElementById('app');
 const context = {
   onSetTitle: value => document.title = value,
   onSetMeta: (name, content) => {
@@ -28,24 +27,36 @@ const context = {
 };
 
 function run() {
-  router.dispatch({ path: window.location.pathname, context }, (state, component) => {
-    ReactDOM.render(component, container, () => {
-      let css = document.getElementById('css');
-      css.parentNode.removeChild(css);
-    });
+  router.dispatch({ path: window.location.pathname, context }, (_, component) => {
+    render(component);
   });
 
   dispatcher.register(action => {
     if (action.type === ActionTypes.CHANGE_LOCATION) {
-      router.dispatch({ path: action.path, context }, (state, component) => {
-        ReactDOM.render(component, container);
+      router.dispatch({ path: action.path, context }, (_, component) => {
+        render(component);
       });
     }
+  });
+
+  Location.listen(async(location) => {
+    const state = { path: location.pathname, query: location.query, context };
+    await router.dispatch(state, (_, component) => {
+      render(component);
+    });
+  });
+}
+
+function render (component) {
+  const container = document.getElementById('app');
+  ReactDOM.render(component, container, () => {
+    let css = document.getElementById('css');
+    css.parentNode.removeChild(css);
   });
 }
 
 function handlePopState(event) {
-  location.navigateTo(window.location.pathname, { replace: !!event.state });
+  Location.pushState({ replace: !!event.state }, window.location.pathname);
 }
 
 // Run the application when both DOM is ready
