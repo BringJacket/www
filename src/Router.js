@@ -32,7 +32,7 @@ const router = new Router(on => {
     const post = await HttpClient.get(url);
     if (state.user != post.user) {
       const url = '//' + post.user + '.' + process.env.BASE_DOMAIN + state.path;
-      console.log("Redirect to", url);
+      console.log('Redirect to', url);
     }
     return post && <PostPage post={post} />;
   });
