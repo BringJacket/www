@@ -1,6 +1,6 @@
 FROM iojs:onbuild
 
-RUN npm install -g supervisor webpack concurrently
+RUN npm run build -- release
 
 EXPOSE 5000
-CMD npm run build -- release && npm run serve -- release
+CMD npm run serve -- release
