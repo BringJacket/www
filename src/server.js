@@ -31,7 +31,7 @@ server.get('/bootstrap.js', (_, res) => {
   res
     .status(200)
     .type('application/javascript')
-    .send('var proccess=' + JSON.stringify(bootstrap) + ';');
+    .send('var process=' + JSON.stringify(bootstrap) + ';');
 });
 
 server.get('*', async (req, res, next) => {
