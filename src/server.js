@@ -22,13 +22,16 @@ const templateFile = path.join(__dirname, 'templates/index.html');
 const template = _.template(fs.readFileSync(templateFile, 'utf8'));
 
 server.get('/bootstrap.js', (_, res) => {
-  const whitelist = ['CONTENT_SERVER_URL', 'AUTH_SERVER_URL', 'BASE_DOMAIN'];
+  const whitelist = ['BASE_DOMAIN'];
   const bootstrap = whitelist.reduce((bs, key) => {
-    if (process.env[key]) bs[key] = process.env[key];
+    if (process.env[key]) bs.env[key] = process.env[key];
     return bs;
-  }, {});
+  }, { env : {} });
 
-  res.status(200).send('var process=' + JSON.stringify({ env: bootstrap }) + ';');
+  res
+    .status(200)
+    .type('application/javascript')
+    .send('var proccess=' + JSON.stringify(bootstrap) + ';');
 });
 
 server.get('*', async (req, res, next) => {

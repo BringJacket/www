@@ -1,8 +1,10 @@
 import urljoin from 'url-join';
 
-function canBeFoundAt(domain) {
+function canBeFoundAt(name) {
+  const baseDomain = process.env.SERVER_BASE_DOMAIN || process.env.BASE_DOMAIN;
+  const domain = '//' + name + '.' + baseDomain;
   return (function(/* url parts */) {
-    var args = Array.prototype.slice.call(arguments)
+    const args = Array.prototype.slice.call(arguments);
     args.unshift(domain);
     return urljoin.apply(this, args)
   });
@@ -10,8 +12,8 @@ function canBeFoundAt(domain) {
 
 const Env = {
   urlFor: {
-    content: canBeFoundAt(process.env.CONTENT_SERVER_URL),
-    auth: canBeFoundAt(process.env.AUTH_SERVER_URL)
+    content: canBeFoundAt('api'),
+    auth: canBeFoundAt('auth')
   }
 }
 
