@@ -49,7 +49,6 @@ const router = new Router(on => {
         return <App context={state.context} error={error}><ErrorPage /></App>;
     }
   });
-
 });
 
 export default router;
