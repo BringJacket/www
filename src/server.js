@@ -21,19 +21,6 @@ server.use(express.static(path.join(__dirname, 'public')));
 const templateFile = path.join(__dirname, 'templates/index.html');
 const template = _.template(fs.readFileSync(templateFile, 'utf8'));
 
-server.get('/bootstrap.js', (_, res) => {
-  const whitelist = ['BASE_DOMAIN'];
-  const bootstrap = whitelist.reduce((bs, key) => {
-    if (process.env[key]) bs.env[key] = process.env[key];
-    return bs;
-  }, { env : {} });
-
-  res
-    .status(200)
-    .type('application/javascript')
-    .send('var process=' + JSON.stringify(bootstrap) + ';');
-});
-
 server.get('*', async (req, res, next) => {
   const host = req.get('x-forwarded-host') || req.get('host');
   try {

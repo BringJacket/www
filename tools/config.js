@@ -59,9 +59,7 @@ const config = {
 
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.EnvironmentPlugin([
-      "NODE_ENV"
-    ])
+    new webpack.EnvironmentPlugin(["NODE_ENV"])
   ],
 
   resolve: {
