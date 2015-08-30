@@ -13,7 +13,8 @@ function canBeFoundAt(name) {
 const Env = {
   urlFor: {
     content: canBeFoundAt('api'),
-    auth: canBeFoundAt('auth')
+    auth: canBeFoundAt('auth'),
+    user: canBeFoundAt
   }
 }
 

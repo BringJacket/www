@@ -31,7 +31,7 @@ const router = new Router(on => {
     const url = Env.urlFor.content('posts', state.params.postId);
     const post = await HttpClient.get(url);
     if (state.user != post.user) {
-      const url = '//' + post.user + '.' + process.env.BASE_DOMAIN + state.path;
+      const url = Env.urlFor.user(post.user)(state.path);
       console.log('Redirect to', url);
     }
     return post && <PostPage post={post} />;

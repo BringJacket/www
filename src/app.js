@@ -7,6 +7,7 @@ import Router from './Router';
 import Location from './core/Location';
 import { addEventListener, removeEventListener } from './utils/DOMUtils';
 
+const container = document.getElementById('app');
 const context = {
   onSetTitle: value => document.title = value,
   onSetMeta: (name, content) => {
