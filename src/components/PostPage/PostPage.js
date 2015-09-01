@@ -8,7 +8,6 @@ import marked from 'marked';
 
 @withStyles(styles)
 class PostPage {
-
   static propTypes = {
     post: PropTypes.object.isRequired
   };

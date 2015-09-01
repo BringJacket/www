@@ -2,6 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import styles from './HomePage.css';
+import Link from '../Link';
 import withStyles from '../../decorators/withStyles';
 
 @withStyles(styles)
@@ -18,7 +19,7 @@ class HomePage {
       <div className="HomePage">
         <div className="HomePage-container">
           <h1>{title}</h1>
-          <p>...</p>
+          <p>Hello :) <a onclick={Link.handleClick} href="/posts/1">Post 1</a></p>
         </div>
       </div>
     );
